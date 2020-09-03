@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  div(class="alert alert-success alert-dismissible fade show message-box hide-note" id="message-box" role="alert")
+    p= "Hola"
+    button(type="button" class="close" data-dismiss="alert" aria-label="Close") #[span(aria-hidden="true") &times;]
+  .container
+    .row
+      .col-md-4.offset-md-4
+        .card.mt-5
+          .card-header
+            h4 Register Form
+          .card-body
+            form(id="register-form" class="register-form")
+              .form-group
+                input(type="text" class="form-control" name="email" id="email" placeholder="Email" aria-describedby="emailHelp")
+                <small id="emailHelp" class="form-text text-danger hide-note">Please fill this field</small>
+              .form-group
+                input(type="password" class="form-control" name="password" id="password" placeholder="Type Password" aria-describedby="passwordHelp")
+                <small id="passwordHelp" class="form-text text-danger hide-note">Please fill this field</small>
+              .form-group
+                input(type="password" class="form-control" name="match-password" id="matchPassword" placeholder="Confirm your Password" aria-describedby="matchPasswordHelp")
+                <small id="matchPasswordHelp" class="form-text text-danger hide-note">Please fill this field</small>
+              .d-flex.justify-content-end
+                button(type="submit" class="btn btn-secondary" id="btn-submit") Save
+  script(src='/javascripts/register.js')
+
