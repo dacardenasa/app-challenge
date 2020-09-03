@@ -24,15 +24,11 @@ $("#btn-submit").on("click", function (event) {
   const passMatch = matchPasswords(password, matchPassword);
 
   if (Object.keys(errors).length === 0 && passMatch) {
-    const user = {
-      email,
-      password,
-    };
-
+    // Http request POST to server
     $.ajax({
       type: "POST",
       url: "/",
-      data: user,
+      data: { email, password },
       dataType: "json",
       success: function (data) {
         if (data.status === 200) {
