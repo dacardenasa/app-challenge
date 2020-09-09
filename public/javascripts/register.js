@@ -1,34 +1,21 @@
-function getInputErros(data) {
-  let inputErrors = {};
-  for (const input in data) {
-    if (data[input].length === 0) {
-      inputErrors[input] = true;
-    }
-  }
-  return inputErrors;
-}
-
-function matchPasswords(firstPass, secondPass) {
-  if (firstPass === secondPass) {
-    return true;
-  }
-  return false;
-}
+import { getInputErrors, matchPasswords, validateInputs } from "./functions.js";
 
 $("#btn-submit").on("click", function (event) {
-  const email = $("#email").val();
-  const password = $("#password").val();
-  const matchPassword = $("#matchPassword").val();
+  const email = $("#email");
+  const password = $("#password");
+  const matchPassword = $("#matchPassword");
 
-  const errors = getInputErros({ email, password, matchPassword });
-  const passMatch = matchPasswords(password, matchPassword);
+  const errors = getInputErrors({ email, password, matchPassword });
+  const passMatch = matchPasswords(password.val(), matchPassword.val());
 
   if (Object.keys(errors).length === 0 && passMatch) {
+    // Clean errors tags
+    validateInputs([ email, password, matchPassword ]);
     // Http request POST to server
     $.ajax({
       type: "POST",
       url: "/",
-      data: { email, password },
+      data: { email: email.val(), password: password.val() },
       dataType: "json",
       success: function (data) {
         if (data.status === 200) {
@@ -38,7 +25,6 @@ $("#btn-submit").on("click", function (event) {
           $("#password").val("");
           $("#matchPassword").val("");
         } else {
-          console.log(data.message);
           $("#message-box p").text(data.message);
           $("#message-box")
             .removeClass("hide-note alert-success")
@@ -48,16 +34,16 @@ $("#btn-submit").on("click", function (event) {
       },
     });
   } else {
-    for (const error in errors) {
-      $(`#${error}`).addClass("is-invalid");
-      $(`#${error}Help`).removeClass("hide-note").css({ display: "block" });
-    }
-
-    if (!passMatch) {
-      $("#passwordHelp").text("Password doesn't match!");
+    // Clean error tags
+    validateInputs([ email, password, matchPassword ]);
+    
+    if (Object.keys(errors).length > 0) {
+      for (const error in errors) {
+        $(`#${error}`).addClass("is-invalid");
+        $(`#${error}Help`).removeClass("hide-note").css({ display: "block" });
+      }
+    } else if (!passMatch) {
       $("#matchPasswordHelp").text("Password doesn't match!");
-      $("#password").addClass("is-invalid");
-      $("#passwordHelp").removeClass("hide-note").css({ display: "block" });
       $("#matchPassword").addClass("is-invalid");
       $("#matchPasswordHelp").removeClass("hide-note").css({ display: "block" });
     }
