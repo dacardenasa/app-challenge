@@ -6,11 +6,11 @@ html
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="icon" type="image/png" href="https://img.icons8.com/carbon-copy/100/000000/add-user-male.png" sizes="16x16")
+    title= "Register App"
     block scripts
       script(src='/js/jquery.min.js')
       script(src='/js/popper.js')
       script(src='/js/bootstrap.min.js')
-    title= "Register App"
   body
     nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
       a(class="navbar-brand" href="/") App Challenge
@@ -23,4 +23,8 @@ html
             a(class="nav-link" href="/users") View users
           li.nav-item
             a( class="nav-link" href="https://icons8.com/icon/3eNWNacag1A8/añadir-usuario-masculino") icon by Icons8
-    block content
+    .page-wrap
+      block content
+    footer.site-footer
+      .credits.d-flex.justify-content-center
+        p.text-white.align-self-center Challenge developed by Diego Armando Cárdenas &copy;
