@@ -21,9 +21,9 @@ userHandler.registerUser = async (req, res) => {
 userHandler.getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.json(users);
+    res.json({ users, status: 200 });
   } catch (error) {
-    res.json({ message: error.message });
+    res.json({ message: error.message, status: 400 });
   }
 }
 

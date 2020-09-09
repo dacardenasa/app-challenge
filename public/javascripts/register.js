@@ -14,7 +14,7 @@ $("#btn-submit").on("click", function (event) {
     // Http request POST to server
     $.ajax({
       type: "POST",
-      url: "/",
+      url: "/users/register",
       data: { email: email.val(), password: password.val() },
       dataType: "json",
       success: function (data) {
@@ -24,6 +24,26 @@ $("#btn-submit").on("click", function (event) {
           $("#email").val("");
           $("#password").val("");
           $("#matchPassword").val("");
+          $("#form-container").css({ display: "none" });
+          
+          // http GET request users
+          $.ajax({
+            type: "GET",
+            url: "/users",
+            dataType: "json",
+            success: function(data) {
+              if (data.status === 200) {
+                const { users } = data;
+                $.each(users, function( index, value) {
+                  $("#users-table tbody").append(`<tr>
+                    <td>${value.username}</td>
+                  </tr>`);
+                })
+              }
+            }
+          });
+          $("#users-table").css({ display: "block"});
+
         } else {
           $("#message-box p").text(data.message);
           $("#message-box")
