@@ -32,6 +32,7 @@ $("#btn-submit").on("click", function (event) {
             url: "/users",
             dataType: "json",
             success: function(data) {
+              console.log(data);
               if (data.status === 200) {
                 const { users } = data;
                 $.each(users, function( index, value) {
