@@ -1,4 +1,4 @@
-import { getInputErrors, matchPasswords, validateInputs } from "./functions.js";
+import { getInputErrors, matchPasswords, validateInputs } from "./utils.js";
 
 $("#btn-submit").on("click", function (event) {
   const email = $("#email");
@@ -32,7 +32,6 @@ $("#btn-submit").on("click", function (event) {
             url: "/users",
             dataType: "json",
             success: function(data) {
-              console.log(data);
               if (data.status === 200) {
                 const { users } = data;
                 $.each(users, function( index, value) {
@@ -44,7 +43,6 @@ $("#btn-submit").on("click", function (event) {
             }
           });
           $("#users-table").css({ display: "block"});
-
         } else {
           $("#message-box p").text(data.message);
           $("#message-box")
